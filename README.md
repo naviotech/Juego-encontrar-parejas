@@ -7,9 +7,30 @@ El juego continúa hasta que todas las parejas de cartas se encuentran y la cuad
 
 ## Captura de Pantalla
 
-![Captura de Pantalla ]()
+<img src="https://github.com/Mayadevv/Juego-encontrar-parejas/blob/main/capt2.png" width="500px" height="400px"> <img src="https://github.com/Mayadevv/Juego-encontrar-parejas/blob/main/capt.png" width="500px" height="400px">
+
+
+
 
 ## Características
+
+El Juego de Encontrar Parejas ofrece las siguientes características:
+
+- **Tablero con 15 Pares de Cartas**: Disfruta de un desafío con un total de 30 cartas (15 pares) distribuidas aleatoriamente en el tablero.
+  
+- **Cronómetro Integrado**: Un cronómetro visible en la parte superior del juego te permite registrar el tiempo que tardas en encontrar todas las parejas.
+
+- **Botón de Reinicio**: Un botón debajo del tablero te permite reiniciar el juego en cualquier momento para empezar una nueva partida.
+
+### Cómo Jugar
+
+- Voltea las cartas haciendo clic en ellas para encontrar las parejas idénticas.
+  
+- Utiliza tu memoria y concentración para recordar la ubicación de las cartas volteadas.
+
+- Intenta completar el juego encontrando todas las parejas con la menor cantidad de movimientos y en el menor tiempo posible.
+
+¡Disfruta de este divertido desafío de memoria y competición!
 
 
 
