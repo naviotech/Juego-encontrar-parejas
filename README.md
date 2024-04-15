@@ -6,8 +6,12 @@ El juego consiste en una cuadrícula de cartas boca abajo. El jugador puede volt
 El juego continúa hasta que todas las parejas de cartas se encuentran y la cuadrícula está completamente descubierta. El objetivo es completar el juego con la menor cantidad de movimientos posibles.
 
 ## Captura de Pantalla
+<p align="center">
+  <img src="https://github.com/Mayadevv/Juego-encontrar-parejas/blob/main/capt2.png" width="500px" height="400px">
+  <img src="https://github.com/Mayadevv/Juego-encontrar-parejas/blob/main/capt.png" width="500px" height="400px">
+</p>
 
-<img src="https://github.com/Mayadevv/Juego-encontrar-parejas/blob/main/capt2.png" width="500px" height="400px"> <img src="https://github.com/Mayadevv/Juego-encontrar-parejas/blob/main/capt.png" width="500px" height="400px">
+ 
 
 
 
@@ -71,6 +75,6 @@ El Juego de Encontrar Parejas es un desafío de memoria divertido y adictivo. Si
 ## Autor
 
 - **Nombre:** Eduardo Navio Maya
-- **Contacto:** naviomaya@gmail.com
+- **Contacto:** [![GMAIL](https://img.shields.io/badge/naviomaya%40gmail.com%20-%20%20DISCORD?style=social&logo=GMAIL&labelColor=black&color=white)](mailto:naviomaya@gmail.com)
 - **Link al Proyecto:** [Proyecto](https://encontrar-parejas.netlify.app/)
 
