@@ -4,9 +4,6 @@ import { Parejas } from './parejas'
 import { Celdas } from './Celdas'
 import conffeti from 'canvas-confetti'
 
-const tiempo = new Date()
-console.log(tiempo)
-
 const comprobarWinner = (array) => {
   const respuesta = array.every((e) => {
     return e.fijo === true
@@ -14,32 +11,43 @@ const comprobarWinner = (array) => {
   return respuesta
 }
 export function App () {
-  const [celdas, setCeldas] = useState(Array(30).fill({ emoji: null, visible: false, fijo: false, indice: null }))
-  const [tiempo, setTiempo] = useState(0)
-  const [winner, setWinner] = useState(false)
-  const [tiempoConseguido, setTiempoConseguido] = useState(0)
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setTiempo((prevTiempo) => prevTiempo + 1)
-    }, 1000)
-
-    return () => clearInterval(intervalId)
-  }, [])
-  useEffect(() => {
+  const [celdas, setCeldas] = useState(() => {
     const arrayAleatorio = aleatorio(30)
-    const nuevaCeldas = Array(30).fill({ emoji: null, visible: false, fijo: false, indice: null })
+    const nuevaCeldas = Array(30).fill({ emoji: null, visible: false, fijo: false, indice: null, animacion: false })
 
     let contador = 0
     for (const pareja in Parejas) {
       const emoji = Parejas[pareja]
-      nuevaCeldas[arrayAleatorio[contador]] = { emoji, visible: false, fijo: false, indice: null }
+      nuevaCeldas[arrayAleatorio[contador]] = { emoji, visible: false, fijo: false, indice: null, animacion: false }
       contador++
-      nuevaCeldas[arrayAleatorio[contador]] = { emoji, visible: false, fijo: false, indice: null }
+      nuevaCeldas[arrayAleatorio[contador]] = { emoji, visible: false, fijo: false, indice: null, animacion: false }
       contador++
     }
-    setTiempo(0)
-    setCeldas(nuevaCeldas)
-  }, [])
+    const tablero = window.localStorage.getItem('tablero')
+    return tablero ? JSON.parse(tablero) : nuevaCeldas
+  })
+  const [tiempo, setTiempo] = useState(() => {
+    const tiempo = window.localStorage.getItem('tiempo')
+    return tiempo ? JSON.parse(tiempo) : 0
+  })
+  const [winner, setWinner] = useState(() => {
+    const winner = window.localStorage.getItem('winner')
+    return winner ? JSON.parse(winner) : false
+  })
+  const [tiempoConseguido, setTiempoConseguido] = useState(() => {
+    const record = window.localStorage.getItem('tiempoRecord')
+    return record ? JSON.parse(record) : 0
+  })
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setTiempo((prevTiempo) => {
+        const aumento = prevTiempo + 1
+        window.localStorage.setItem('tiempo', JSON.stringify(aumento))
+        return aumento
+      })
+    }, 1000)
+    return () => clearInterval(intervalId)
+  }, [tiempo])
   const actualizarCelda = (index) => {
     const newArray = [...celdas]
     newArray[index] = { ...newArray[index], visible: true, indice: index }
@@ -66,14 +74,17 @@ export function App () {
           }, 1)
         } else {
           const updatedArray = newArray.map((celda) =>
-            celda.visible && !celda.fijo ? { ...celda, fijo: true } : celda
+            celda.visible && !celda.fijo ? { ...celda, fijo: true, animacion: true } : celda
           )
           setCeldas(updatedArray)
+          window.localStorage.setItem('tablero', JSON.stringify(updatedArray))
           const respuesta = comprobarWinner(updatedArray)
           if (respuesta) {
             conffeti()
+            window.localStorage.setItem('winner', JSON.stringify(respuesta))
             setWinner(true)
             const tiempoRecord = (formatoTiempo(tiempo))
+            window.localStorage.setItem('tiempoRecord', JSON.stringify(tiempoRecord))
             setTiempoConseguido(tiempoRecord)
           }
         }
@@ -82,22 +93,27 @@ export function App () {
   }
   const handleReset = () => {
     const arrayAleatorio = aleatorio(30)
-    const nuevaCeldas = Array(30).fill({ emoji: null, visible: false, fijo: false, indice: null })
+    const nuevaCeldas = Array(30).fill({ emoji: null, visible: false, fijo: false, indice: null, animacion: false })
 
     let contador = 0
     for (const pareja in Parejas) {
       const emoji = Parejas[pareja]
-      nuevaCeldas[arrayAleatorio[contador]] = { emoji, visible: false, fijo: false, indice: null }
+      nuevaCeldas[arrayAleatorio[contador]] = { emoji, visible: false, fijo: false, indice: null, animacion: false }
       contador++
-      nuevaCeldas[arrayAleatorio[contador]] = { emoji, visible: false, fijo: false, indice: null }
+      nuevaCeldas[arrayAleatorio[contador]] = { emoji, visible: false, fijo: false, indice: null, animacion: false }
       contador++
     }
     const tablero = document.querySelector('.tablero')
     const arry = [...tablero.children]
     arry.forEach((div) => (div.classList.remove('animacion')))
-    setTiempo(0)
+    window.localStorage.removeItem('tablero')
+    window.localStorage.removeItem('tiempo')
+    window.localStorage.removeItem('winner')
+    window.localStorage.removeItem('tiempoRecord')
     setCeldas(nuevaCeldas)
     setWinner(false)
+    setTiempo(0)
+    setTiempoConseguido(0)
   }
 
   const formatoTiempo = (segundos) => {
@@ -122,6 +138,7 @@ export function App () {
                   actualizarCelda={actualizarCelda}
                   emogi={celda.visible ? celda.emoji : null}
                   isSelected
+                  celda={celda.animacion}
                 />
               )
             })
